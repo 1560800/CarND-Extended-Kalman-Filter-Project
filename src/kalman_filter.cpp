@@ -48,14 +48,14 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
    * TODO: update the state by using Extended Kalman Filter equations
    */
 	double px = x_[0];
-	double py = y_[1];
+	double py = x_[1];
 	double px2 = px * px;
 	double py2 = py * py;
 	double vx = x_[2];
 	double vy = x_[3];
 
 	double rho = sqrt(px2 + py2);
-	double theta = atan(py, px);
+	double theta = atan2(py, px);
 	double rho_dot;
 
 	if ((px2 + py2) >= 0.0001) {
