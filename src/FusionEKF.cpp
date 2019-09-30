@@ -35,12 +35,12 @@ FusionEKF::FusionEKF() {
 
   //measurement function matrix H
   H_laser_ << 1, 0, 0, 0,
-			  0, 1, 0, 0;
+		0, 1, 0, 0;
 
   //jacobian matrix H
   Hj_ << 0, 0, 0, 0,
-		 0, 0, 0, 0,
-		 0, 0, 0, 0;
+	0, 0, 0, 0,
+	0, 0, 0, 0;
 }
 
 /**
@@ -73,10 +73,10 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
 		float theta = measurement_pack.raw_measurements_[1];
 		float ro_dot = measurement_pack.raw_measurements_[2];
 
-		double px = ro * sin(theta);
-		double py = ro * cos(theta);
-		double vx = ro_dot * sin(theta);
-		double vy = ro_dot * cos(theta);
+		double px = ro * cos(theta);
+		double py = ro * sin(theta);
+		double vx = ro_dot * cos(theta);
+		double vy = ro_dot * sin(theta);
 
 		ekf_.x_ << px, py, vx, vy;
     }
@@ -150,8 +150,8 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
 
 	  //check error on division by zero
 	  if ((px * px + py * py) >= 0.0001) {
-		  Hj = tools.CalculateJacobian(ekf_.x_);
-		  ekf_.H_ = Hj;
+		  Hj_ = tools.CalculateJacobian(ekf_.x_);
+		  ekf_.H_ = Hj_;
 		  ekf_.R_ = R_radar_;
 		  ekf_.UpdateEKF(measurement_pack.raw_measurements_);
 	  }
