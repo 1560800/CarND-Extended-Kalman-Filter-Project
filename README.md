@@ -3,9 +3,8 @@
 |Dataset 1|Dataset 2|
 |:--------:|:--------:|
 |[![Dataset 1](/data/dataset1.png)](https://youtu.be/16QFaT-esNY)|[![Dataset 2](/data/dataset1.png)](https://youtu.be/kwy0-6A07XE)|
+|[YouTube Link](https://youtu.be/16QFaT-esNY)|[YouTube Link](https://youtu.be/kwy0-6A07XE)|
 
-https://youtu.be/16QFaT-esNY
-https://youtu.be/kwy0-6A07XE
 
 Self-Driving Car Engineer Nanodegree Program
 
