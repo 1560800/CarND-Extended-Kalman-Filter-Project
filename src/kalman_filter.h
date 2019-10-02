@@ -64,7 +64,7 @@ class KalmanFilter {
   // measurement covariance matrix
   Eigen::MatrixXd R_;
 
-  void Estimate(Eigen::VectorXd& y);
+  void Estimate(Eigen::VectorXd &y, const std::string &sensor_type); 
 };
 
 #endif // KALMAN_FILTER_H_

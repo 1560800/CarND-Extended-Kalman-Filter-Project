@@ -3,8 +3,7 @@
 
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
-using std::cout;
-using std::endl;
+using namespace std;
 
 /* 
  * Please note that the Eigen library does not initialize 
@@ -40,23 +39,23 @@ void KalmanFilter::Update(const VectorXd &z) {
    */
 	VectorXd z_pred = H_ * x_;
 	VectorXd y = z - z_pred;
-	Estimate(y);
+	Estimate(y, "LASER");
 }
 
 void KalmanFilter::UpdateEKF(const VectorXd &z) {
   /**
    * TODO: update the state by using Extended Kalman Filter equations
    */
-	double px = x_[0];
-	double py = x_[1];
+	double px = x_(0);
+	double py = x_(1);
 	double px2 = px * px;
 	double py2 = py * py;
-	double vx = x_[2];
-	double vy = x_[3];
+	double vx = x_(2);
+	double vy = x_(3);
 
 	double rho = sqrt(px2 + py2);
 	double theta = atan2(py, px);
-	double rho_dot;
+	double rho_dot = 0;
 
 	if ((px2 + py2) >= 0.0001) {
 		rho_dot = (px * vx + py * vy) / rho;
@@ -69,10 +68,10 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
 	VectorXd z_pred(3);
 	z_pred << rho, theta, rho_dot;
 	VectorXd y = z - z_pred;
-	Estimate(y);
+	Estimate(y, "RADAR");
 }
 
-void KalmanFilter::Estimate(VectorXd& y) {
+void KalmanFilter::Estimate(VectorXd &y, const string &sensor_type) {
 	/**
 	 * TODO: update the state by using Extended Kalman Filter equations
 	 */
@@ -81,7 +80,16 @@ void KalmanFilter::Estimate(VectorXd& y) {
 	MatrixXd Si = S.inverse();
 	MatrixXd PHt = P_ * Ht;
 	MatrixXd K = PHt * Si;
-
+  
+  if (sensor_type == "RADAR") {
+    while (y(1) < -M_PI || M_PI < y(1)) {
+      if (y(1) < -M_PI) {
+        y(1) += 2 * M_PI;
+      } else if (M_PI < y(1)) {
+        y(1) -= 2 * M_PI;
+      }
+    }
+  }
 	//new estimate
 	x_ = x_ + (K * y);
 	long x_size = x_.size();
