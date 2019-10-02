@@ -1,7 +1,6 @@
 # Extended Kalman Filter Project Starter Code
-# Behavioral Cloning Project
 
-|Dataset 1 driving|Autonomous driving|
+|Dataset 1|Dataset 2|
 |:--------:|:--------:|
 |[![Dataset 1](/data/dataset1.png)](https://youtu.be/16QFaT-esNY)|[![Dataset 2](/data/dataset1.png)](https://youtu.be/kwy0-6A07XE)|
 
